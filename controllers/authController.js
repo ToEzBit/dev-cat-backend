@@ -49,7 +49,7 @@ exports.devRegister = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    const token = genToken({ id: createdDev.id });
+    const token = genToken.dev({ id: createdDev.id });
 
     res.json({ token: token });
   } catch (err) {
@@ -77,7 +77,7 @@ exports.devLogin = async (req, res, next) => {
       createError("Email or password is incorrect", 400);
     }
 
-    const token = genToken({ id: dev.id });
+    const token = genToken.dev({ id: dev.id });
 
     res.json({ token: token });
   } catch (err) {
@@ -129,7 +129,7 @@ exports.userRegister = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    const token = genToken({ id: createdUser.id });
+    const token = genToken.user({ id: createdUser.id });
 
     res.json({ token: token });
   } catch (err) {
@@ -157,7 +157,7 @@ exports.userLogin = async (req, res, next) => {
       createError("Email or password is incorrect", 400);
     }
 
-    const token = genToken({ id: user.id });
+    const token = genToken.user({ id: user.id });
 
     res.json({ token: token });
   } catch (err) {
