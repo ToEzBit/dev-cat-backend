@@ -79,6 +79,9 @@ exports.devLogin = async (req, res, next) => {
 
     const token = genToken.dev({ id: dev.id });
 
+    dev.lastLogin = new Date();
+    await dev.save();
+
     res.json({ token: token });
   } catch (err) {
     next(err);
