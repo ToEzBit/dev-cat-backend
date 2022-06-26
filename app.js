@@ -6,11 +6,11 @@ const cors = require("cors");
 
 const errorMiddleWare = require("./middlewares/error");
 const notFoundMiddleWare = require("./middlewares/notFound");
-const userPassportJwt = require("./middlewares/userPassportJwt");
 
 const authRoute = require("./routes/authRoute");
 const devRoute = require("./routes/devRoute");
 const userRoute = require("./routes/userRoute");
+const productRoute = require("./routes/productRoute");
 
 const app = express();
 if (process.env.NODE_ENV === "development") {
@@ -22,7 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/auth", authRoute);
 app.use("/dev", devRoute);
-app.use("/user", userPassportJwt, userRoute);
+app.use("/user", userRoute);
+app.use("/products", productRoute);
 
 app.use(errorMiddleWare);
 app.use(notFoundMiddleWare);
