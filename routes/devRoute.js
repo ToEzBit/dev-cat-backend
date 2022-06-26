@@ -16,6 +16,7 @@ router.patch(
 router.post("/skill", devPassportJwt, devController.createDevSkill);
 router.delete("/skill/:skillId", devPassportJwt, devController.deleteDevSkill);
 router.get("/me", devPassportJwt, devController.getDevProfile);
-router.get("/:devId", devController.getDevById);
+router.get("/orders", devPassportJwt, devController.getMyOrders);
+router.get("/:devId", devPassportJwt, devController.getDevById);
 
 module.exports = router;

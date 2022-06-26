@@ -18,11 +18,6 @@ module.exports = {
           key: "id",
         },
       },
-
-      status: {
-        type: Sequelize.ENUM(["pass", "needRevision"]),
-        allowNull: false,
-      },
       countRevision: {
         type: Sequelize.INTEGER,
         allowNull: false,

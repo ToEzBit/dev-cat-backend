@@ -82,12 +82,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      totalPrice: {
+      packagePrice: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       totalSpacialRequirementPrice: {
         type: DataTypes.INTEGER,
+      },
+      totalPrice: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       startDate: {
         type: DataTypes.DATE,
@@ -98,13 +102,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       endDate: {
         type: DataTypes.DATE,
-        allowNull: false,
       },
       status: {
         type: DataTypes.ENUM(
           "pending",
           "inprogress",
           "awaitingReview",
+          "needRevision",
           "completed",
           "cancelled"
         ),

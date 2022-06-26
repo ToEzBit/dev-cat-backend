@@ -13,6 +13,7 @@ router.patch(
   userController.userUpdateProfileImage
 );
 router.get("/me", userPassportJwt, userController.getMe);
+router.get("/orders", userPassportJwt, userController.getMyOrders);
 router.get("/:userId", userController.getUserById);
 
 module.exports = router;

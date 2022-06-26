@@ -3,7 +3,15 @@ const fs = require("fs");
 
 const cloundinary = require("../utils/cloundinary");
 const createError = require("../utils/createError");
-const { Dev, DevSkill } = require("../models");
+const {
+  Dev,
+  DevSkill,
+  Order,
+  Product,
+  Package,
+  ProofPayment,
+  User,
+} = require("../models");
 
 exports.devUpdateProfile = async (req, res, next) => {
   try {
@@ -213,6 +221,62 @@ exports.getDevById = async (req, res, next) => {
     });
 
     res.json({ dev });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getMyOrders = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+
+    const orders = await Order.findAll({
+      where: { devId: id },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "productId",
+          "packageId",
+          "userId",
+          "devId",
+        ],
+      },
+      include: [
+        {
+          model: Product,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "info", "devId"],
+          },
+        },
+        {
+          model: Package,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "info", "productId"],
+          },
+        },
+        {
+          model: User,
+          attributes: {
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "password",
+              "lastChangePassword",
+              "profileImagePublicId",
+            ],
+          },
+        },
+        {
+          model: ProofPayment,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "orderId"],
+          },
+        },
+      ],
+    });
+
+    res.json({ orders });
   } catch (err) {
     next(err);
   }

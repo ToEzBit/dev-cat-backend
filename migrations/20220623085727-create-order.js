@@ -56,16 +56,19 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      totalPrice: {
-        type: Sequelize.DECIMAL,
+      packagePrice: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       totalSpacialRequirementPrice: {
         type: Sequelize.DECIMAL,
       },
+      totalPrice: {
+        type: Sequelize.DECIMAL,
+        allowNull: false,
+      },
       startDate: {
         type: Sequelize.DATE,
-        allowNull: false,
       },
       totalDuration: {
         type: Sequelize.INTEGER,
@@ -80,6 +83,7 @@ module.exports = {
           "pending",
           "inprogress",
           "awaitingReview",
+          "needRevision",
           "completed",
           "cancelled"
         ),

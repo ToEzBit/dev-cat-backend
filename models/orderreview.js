@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   OrderReview.init(
     {
-      status: {
-        type: DataTypes.ENUM(["pass", "needRevision"]),
-        allowNull: false,
-      },
       countRevision: {
         type: DataTypes.INTEGER,
         allowNull: false,
