@@ -34,22 +34,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      responsiveDesign: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      sourceFile: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      contentUpload: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      numberOfPages: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       price: {
         type: Sequelize.DECIMAL,
         allowNull: false,

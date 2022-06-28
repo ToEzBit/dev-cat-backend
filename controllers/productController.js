@@ -11,9 +11,6 @@ const {
   User,
 } = require("../models");
 
-const sequelize = require("sequelize");
-const e = require("express");
-
 exports.createProduct = async (req, res, next) => {
   try {
     const { id } = req.user;
@@ -445,6 +442,12 @@ exports.getProductById = async (req, res, next) => {
           attributes: {
             exclude: ["createdAt", "updatedAt", "productId"],
           },
+          include: [
+            {
+              model: PackageDetail,
+              attributes: ["id", "title", "value"],
+            },
+          ],
         },
         {
           model: ProductReview,
