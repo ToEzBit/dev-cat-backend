@@ -452,7 +452,7 @@ exports.getProductById = async (req, res, next) => {
         {
           model: ProductReview,
           attributes: {
-            exclude: ["id", "devId", "createdAt", "updatedAt", "productId"],
+            exclude: ["devId", "createdAt", "updatedAt", "productId"],
           },
           include: [
             {
