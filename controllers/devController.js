@@ -11,6 +11,7 @@ const {
   Package,
   ProofPayment,
   User,
+  ProductReview,
 } = require("../models");
 
 exports.devUpdateProfile = async (req, res, next) => {
@@ -215,6 +216,13 @@ exports.getDevById = async (req, res, next) => {
           model: DevSkill,
           attributes: {
             exclude: ["createdAt", "updatedAt", "devId"],
+          },
+        },
+        {
+          model: ProductReview,
+          include: [{ model: User, attributes: ["username", "profileImage"] }],
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "devId", "userId", "productId"],
           },
         },
       ],

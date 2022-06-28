@@ -40,6 +40,11 @@ router.post(
   userPassportJwt,
   productController.createProductReview
 );
+router.patch(
+  "/review/:reviewId",
+  userPassportJwt,
+  productController.editProductReview
+);
 router.get("/", productController.getAllProducts);
 router.get("/dev/:devId", productController.getAllDevProducts);
 router.get("/:productId", productController.getProductById);
@@ -52,6 +57,11 @@ router.delete(
   "/package-detail/:packageDetailId",
   devPassportJwt,
   productController.deletePackageDetail
+);
+router.delete(
+  "/review/:reviewId",
+  userPassportJwt,
+  productController.deleteReview
 );
 
 module.exports = router;

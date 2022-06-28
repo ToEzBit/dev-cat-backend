@@ -10,6 +10,8 @@ const {
   Dev,
   User,
 } = require("../models");
+
+const sequelize = require("sequelize");
 const e = require("express");
 
 exports.createProduct = async (req, res, next) => {
@@ -332,18 +334,11 @@ exports.getAllProducts = async (req, res, next) => {
         },
         {
           model: Package,
-          attributes: {
-            exclude: [
-              "id",
-              "productId",
-              "createdAt",
-              "updatedAt",
-              "info",
-              "revision",
-              "title",
-              "duration",
-            ],
-          },
+          attributes: ["price"],
+        },
+        {
+          model: ProductReview,
+          attributes: ["rate"],
         },
       ],
     });
@@ -397,18 +392,11 @@ exports.getAllDevProducts = async (req, res, next) => {
         },
         {
           model: Package,
-          attributes: {
-            exclude: [
-              "id",
-              "productId",
-              "createdAt",
-              "updatedAt",
-              "info",
-              "revision",
-              "title",
-              "duration",
-            ],
-          },
+          attributes: ["price"],
+        },
+        {
+          model: ProductReview,
+          attributes: ["rate"],
         },
       ],
     });
@@ -457,14 +445,6 @@ exports.getProductById = async (req, res, next) => {
           attributes: {
             exclude: ["createdAt", "updatedAt", "productId"],
           },
-          include: [
-            {
-              model: PackageDetail,
-              attributes: {
-                exclude: ["createdAt", "updatedAt", "packageId"],
-              },
-            },
-          ],
         },
         {
           model: ProductReview,
@@ -532,6 +512,56 @@ exports.deletePackageDetail = async (req, res, next) => {
     }
 
     await packageDetail.destroy();
+    res.status(204).json();
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.editProductReview = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const { reviewId } = req.params;
+    const { message, rate, isAnonymous } = req.body;
+
+    const productReview = await ProductReview.findOne({
+      where: { id: reviewId },
+    });
+
+    if (!productReview) {
+      createError("Product review not found", 404);
+    }
+
+    if (productReview.userId !== id) {
+      createError("You are not allowed to edit this review", 403);
+    }
+
+    await productReview.update({
+      message,
+      rate,
+      isAnonymous,
+    });
+    res.json({ productReview });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteReview = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const { reviewId } = req.params;
+
+    const productReview = await ProductReview.findByPk(reviewId);
+
+    if (!productReview) {
+      createError("Product review not found", 404);
+    }
+    if (productReview.userId !== id) {
+      createError("You are not allowed to delete this review", 403);
+    }
+
+    await productReview.destroy();
     res.status(204).json();
   } catch (err) {
     next(err);
