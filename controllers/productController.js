@@ -48,40 +48,50 @@ exports.addProductImage = async (req, res, next) => {
   try {
     const { id } = req.user;
     const { productId } = req.params;
-    const { role } = req.body;
-    const image = req.file;
 
     const product = await Product.findOne({
       where: { id: productId, devId: id },
     });
 
-    if (!image) {
-      createError("Image is required", 400);
-    }
-
     if (!product) {
       createError("Product not found", 404);
     }
 
-    const uploadedImage = await cloundinary.upload(image.path, {
-      folder: `dev-cat/product-image/`,
-    });
+    if (req.files.standard) {
+      const { standard } = req.files;
+      standard.map(async (el) => {
+        const uploadStandardImage = await cloundinary.upload(el.path, {
+          folder: `dev-cat/product-image/`,
+        });
+        const addImage = await ProductImage.create({
+          productId,
+          role: "standard",
+          image: uploadStandardImage.secure_url,
+          publicId: uploadStandardImage.public_id,
+        });
+        fs.unlinkSync(el.path);
+      });
+    }
 
-    const createdProductImage = await ProductImage.create({
-      productId,
-      image: uploadedImage.secure_url,
-      publicId: uploadedImage.public_id,
-      role,
-    });
-    res.json({ createdProductImage });
+    if (req.files.thumbnail) {
+      const { thumbnail } = req.files;
+      const uploadThumbnail = await cloundinary.upload(thumbnail[0].path, {
+        folder: `dev-cat/product-image/`,
+      });
+      const addThumbnail = await ProductImage.create({
+        productId,
+        role: "thumbnail",
+        image: uploadThumbnail.secure_url,
+        publicId: uploadThumbnail.public_id,
+      });
+      fs.unlinkSync(thumbnail[0].path);
+    }
+    res.status(200).json();
   } catch (err) {
     if (err.message === "Data truncated for column 'role' at row 1") {
       err.message = "role is invalid";
     }
     next(err);
-  } finally {
-    const image = req.file;
-    fs.unlinkSync(image.path);
   }
 };
 

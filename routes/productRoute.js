@@ -11,7 +11,11 @@ router.post("/", devPassportJwt, productController.createProduct);
 router.post(
   "/:productId/image",
   devPassportJwt,
-  upload.single("image"),
+  upload.fields([
+    { name: "standard", maxCount: 10 },
+    { name: "thumbnail", maxCount: 1 },
+  ]),
+
   productController.addProductImage
 );
 router.patch("/:productId", devPassportJwt, productController.updateProduct);
