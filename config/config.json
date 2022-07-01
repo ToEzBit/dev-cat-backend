@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
-    "database": "socket",
+    "password": "Codecamp-11",
+    "database": "dev_cat_socket",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
