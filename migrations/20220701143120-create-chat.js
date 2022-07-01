@@ -8,28 +8,18 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      userId: {
+      conversationId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: {
-            tableName: "Users",
-          },
-          key: "id",
-        },
-      },
-      devId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: {
-            tableName: "Devs",
+            tableName: "Conversations",
           },
           key: "id",
         },
       },
       sender: {
-        type: Sequelize.ENUM(["user", "dev"]),
+        type: Sequelize.STRING,
         allowNull: false,
       },
       message: {

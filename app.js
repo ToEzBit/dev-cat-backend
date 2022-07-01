@@ -12,6 +12,8 @@ const devRoute = require("./routes/devRoute");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
 const orderRoute = require("./routes/orderRoute");
+const conversationRoute = require("./routes/conversations");
+const messageRoute = require("./routes/messages");
 
 const app = express();
 if (process.env.NODE_ENV === "development") {
@@ -26,6 +28,8 @@ app.use("/dev", devRoute);
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
+app.use("/conversations", conversationRoute);
+app.use("/messages", messageRoute);
 
 app.use(errorMiddleWare);
 app.use(notFoundMiddleWare);

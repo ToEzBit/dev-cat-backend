@@ -43,15 +43,6 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
       });
-
-      Dev.hasMany(models.Chat, {
-        foreignKey: {
-          name: "devId",
-          allowNull: false,
-        },
-        onDelete: "RESTRICT",
-        onUpdate: "RESTRICT",
-      });
     }
   }
   Dev.init(

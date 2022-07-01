@@ -25,15 +25,6 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "RESTRICT",
         onUpdate: "RESTRICT",
       });
-
-      User.hasMany(models.Chat, {
-        foreignKey: {
-          name: "userId",
-          allowNull: false,
-        },
-        onDelete: "RESTRICT",
-        onUpdate: "RESTRICT",
-      });
     }
   }
   User.init(
