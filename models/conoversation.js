@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Conversation.init(
     {
-      senderId: DataTypes.STRING,
-      receiverId: DataTypes.STRING,
+      senderId: DataTypes.INTEGER,
+      receiverId: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       senderId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       receiverId: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

@@ -19,11 +19,11 @@ module.exports = (sequelize, DataTypes) => {
   Chat.init(
     {
       sender: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       message: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       read: {
