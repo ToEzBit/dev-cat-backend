@@ -353,7 +353,6 @@ exports.getAllProducts = async (req, res, next) => {
 exports.getAllDevProducts = async (req, res, next) => {
   try {
     const { devId } = req.params;
-
     const products = await Product.findAll({
       where: { devId },
       attributes: {
