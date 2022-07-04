@@ -78,6 +78,9 @@ module.exports = (sequelize, DataTypes) => {
       lastLogin: DataTypes.DATE,
       bankProvider: DataTypes.STRING,
       bankAccountNumber: DataTypes.STRING,
+      forgetKey: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,

@@ -12,6 +12,7 @@ const devRoute = require("./routes/devRoute");
 const userRoute = require("./routes/userRoute");
 const productRoute = require("./routes/productRoute");
 const orderRoute = require("./routes/orderRoute");
+const mailRoute = require("./routes/mailRoute");
 
 const app = express();
 if (process.env.NODE_ENV === "development") {
@@ -26,6 +27,7 @@ app.use("/dev", devRoute);
 app.use("/user", userRoute);
 app.use("/products", productRoute);
 app.use("/orders", orderRoute);
+app.use("/mail", mailRoute);
 
 app.use(errorMiddleWare);
 app.use(notFoundMiddleWare);
