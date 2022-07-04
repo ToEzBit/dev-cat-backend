@@ -5,7 +5,8 @@ const userPassportJwt = require("../middlewares/userPassportJwt");
 const orderController = require("../controllers/orderController");
 const router = express.Router();
 
-router.post("/", devPassportJwt, orderController.createOrder);
+router.post("/create-payment", orderController.createPaymentIntent);
+router.post("/create-order", devPassportJwt, orderController.createOrder);
 router.post(
   "/:orderId/special-requirement",
   devPassportJwt,

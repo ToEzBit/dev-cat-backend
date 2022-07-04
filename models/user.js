@@ -58,6 +58,9 @@ module.exports = (sequelize, DataTypes) => {
       profileImagePublicId: {
         type: DataTypes.STRING,
       },
+      forgetKey: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,

@@ -37,6 +37,9 @@ module.exports = {
       profileImagePublicId: {
         type: Sequelize.STRING,
       },
+      forgetKey: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

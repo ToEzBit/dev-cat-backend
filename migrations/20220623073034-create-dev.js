@@ -46,6 +46,9 @@ module.exports = {
       bankAccountNumber: {
         type: Sequelize.STRING,
       },
+      forgetKey: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
