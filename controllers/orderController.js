@@ -32,7 +32,7 @@ exports.createPaymentIntent = async (req, res, next) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: priceInCent(100),
+      amount: priceInCent(order.totalPrice),
       currency: "thb",
       payment_method_types: ["card"],
     });
