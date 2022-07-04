@@ -1,8 +1,16 @@
+const {
+  User,
+  Order,
+  Product,
+  Package,
+  SpecialRequirement,
+  ProofPayment,
+  OrderReview,
+} = require("../models");
+const createError = require("../utils/createError");
 const createError = require("../utils/createError");
 
-const stripe = require("stripe")(
-  "sk_test_51LGO25J0De5S2BwxeWzkrTS7PSCLuMXUuDGZlmJhYvzKBU6KpwTfZGOl0zGvNeQepEfHKWADIrWpi3WvO64mrkZQ00vMlcjOgu"
-);
+const stripe = require("stripe")(process.env.STRIPE_TOKEN);
 
 const priceInCent = (price) => {
   return price * 100;
@@ -13,7 +21,7 @@ exports.createPaymentIntent = async (req, res, next) => {
     const { id } = req.user;
     const { orderId } = req.body;
 
-    if (!oderId) {
+    if (!orderId) {
       createError("Order id is required", 400);
     }
     const order = await Order.findOne({ where: { id: orderId } });
@@ -243,8 +251,7 @@ exports.updateOrderStatus = async (req, res, next) => {
 
 exports.payment = async (req, res, next) => {
   try {
-    // const { id } = req.user;
-    const id = 2;
+    const { id } = req.user;
     const { orderId } = req.params;
     const { transactionId } = req.body;
 

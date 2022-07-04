@@ -22,7 +22,7 @@ router.patch(
   devPassportJwt,
   orderController.updateOrderStatus
 );
-router.post("/:orderId/payment", orderController.payment);
+router.post("/:orderId/payment", userPassportJwt, orderController.payment);
 router.patch(
   "/:orderId/complete/user",
   userPassportJwt,
