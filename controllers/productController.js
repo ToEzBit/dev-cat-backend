@@ -59,7 +59,7 @@ exports.addProductImage = async (req, res, next) => {
 
     if (req.files.standard) {
       const { standard } = req.files;
-      standard.map(async (el) => {
+      for (const el of standard) {
         const uploadStandardImage = await cloundinary.upload(el.path, {
           folder: `dev-cat/product-image/`,
         });
@@ -70,7 +70,7 @@ exports.addProductImage = async (req, res, next) => {
           publicId: uploadStandardImage.public_id,
         });
         fs.unlinkSync(el.path);
-      });
+      }
     }
 
     if (req.files.thumbnail) {

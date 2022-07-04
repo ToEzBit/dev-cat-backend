@@ -8,7 +8,6 @@ const {
   OrderReview,
 } = require("../models");
 const createError = require("../utils/createError");
-const createError = require("../utils/createError");
 
 const stripe = require("stripe")(process.env.STRIPE_TOKEN);
 

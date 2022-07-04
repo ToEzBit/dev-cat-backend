@@ -26,6 +26,7 @@
     "passport-jwt": "^4.0.0",
     "sequelize": "^6.21.0",
     "sequelize-cli": "^6.4.1",
+    "stripe": "^9.11.0",
     "validator": "^13.7.0"
   }
 }

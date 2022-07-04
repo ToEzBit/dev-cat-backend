@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      imageOrder: DataTypes.INTEGER,
       role: {
         type: DataTypes.ENUM(["standard", "thumbnail", "carousel"]),
         allowNull: false,
