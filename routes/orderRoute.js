@@ -5,7 +5,8 @@ const userPassportJwt = require("../middlewares/userPassportJwt");
 const orderController = require("../controllers/orderController");
 const router = express.Router();
 
-router.post("/", devPassportJwt, orderController.createOrder);
+router.post("/create-payment", orderController.createPaymentIntent);
+router.post("/create-order", devPassportJwt, orderController.createOrder);
 router.post(
   "/:orderId/special-requirement",
   devPassportJwt,
@@ -21,7 +22,7 @@ router.patch(
   devPassportJwt,
   orderController.updateOrderStatus
 );
-router.post("/:orderId/payment", userPassportJwt, orderController.payment);
+router.post("/:orderId/payment", orderController.payment);
 router.patch(
   "/:orderId/complete/user",
   userPassportJwt,
