@@ -43,7 +43,17 @@ exports.devRegister = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    const lastDev = await Dev.findAll({ order: [["id", "DESC"]], limit: 1 });
+
+    let oddId;
+
+    if (lastDev.length > 0) {
+      oddId = lastDev[0].id + 2;
+    } else {
+      oddId = 1;
+    }
     const createdDev = await Dev.create({
+      id: oddId,
       email: email,
       username: username,
       password: hashedPassword,
@@ -126,7 +136,18 @@ exports.userRegister = async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    const lastUser = await User.findAll({ order: [["id", "DESC"]], limit: 1 });
+
+    let evenId;
+
+    if (lastUser.length > 0) {
+      evenId = lastUser[0].id + 2;
+    } else {
+      evenId = 2;
+    }
+
     const createdUser = await User.create({
+      id: evenId,
       email: email,
       username: username,
       password: hashedPassword,
