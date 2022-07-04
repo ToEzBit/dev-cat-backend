@@ -8,10 +8,55 @@ const {
   OrderReview,
 } = require("../models");
 const createError = require("../utils/createError");
+const createError = require("../utils/createError");
+
+const stripe = require("stripe")(process.env.STRIPE_TOKEN);
+
+const priceInCent = (price) => {
+  return price * 100;
+};
+
+exports.createPaymentIntent = async (req, res, next) => {
+  try {
+    const { id } = req.user;
+    const { orderId } = req.body;
+
+    if (!orderId) {
+      createError("Order id is required", 400);
+    }
+    const order = await Order.findOne({ where: { id: orderId } });
+    const user = await User.findOne({ where: { id: id } });
+
+    if (!order) {
+      createError("Order not found", 404);
+    }
+
+    if (!user) {
+      createError("User not found", 404);
+    }
+
+    if (user.Id !== order.userId) {
+      createError("Unauthorised access", 401);
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: priceInCent(order.totalPrice),
+      currency: "thb",
+      payment_method_types: ["card"],
+    });
+
+    res.send({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
+
 exports.createOrder = async (req, res, next) => {
   try {
     const { id } = req.user;
-
     const { userId, productId, packageId } = req.body;
 
     if (!userId) {
@@ -208,7 +253,7 @@ exports.payment = async (req, res, next) => {
   try {
     const { id } = req.user;
     const { orderId } = req.params;
-    const { spacialRequire, transactionId } = req.body;
+    const { transactionId } = req.body;
 
     if (!orderId) {
       createError("orderId is required", 400);

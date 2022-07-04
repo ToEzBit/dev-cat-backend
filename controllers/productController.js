@@ -297,12 +297,7 @@ exports.createProductReview = async (req, res, next) => {
 
 exports.getAllProducts = async (req, res, next) => {
   try {
-    const { page, limit } = req.query;
-
-    const offset = (page - 1) * limit;
     const products = await Product.findAll({
-      offset: +offset,
-      limit: +limit,
       attributes: {
         exclude: ["devId", "createdAt", "updatedAt", "info"],
       },
@@ -358,7 +353,6 @@ exports.getAllProducts = async (req, res, next) => {
 exports.getAllDevProducts = async (req, res, next) => {
   try {
     const { devId } = req.params;
-
     const products = await Product.findAll({
       where: { devId },
       attributes: {
