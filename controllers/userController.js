@@ -186,7 +186,7 @@ exports.getMyOrderById = async (req, res, next) => {
     const { orderId } = req.params;
 
     const order = await Order.findOne({
-      orderId,
+      where: { id: orderId },
       attributes: {
         exclude: ["productId", "packageId"],
       },
