@@ -8,6 +8,7 @@ const {
   Package,
   Dev,
   ProofPayment,
+  OrderReview,
 } = require("../models");
 const createError = require("../utils/createError");
 const cloundinary = require("../utils/cloundinary");
@@ -175,6 +176,55 @@ exports.getMyOrders = async (req, res, next) => {
     });
 
     res.json({ orders });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getMyOrderById = async (req, res, next) => {
+  try {
+    const { orderId } = req.params;
+
+    const order = await Order.findOne({
+      orderId,
+      attributes: {
+        exclude: ["productId", "packageId"],
+      },
+      include: [
+        {
+          model: Product,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "info", "devId"],
+          },
+        },
+        {
+          model: Package,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "info", "productId"],
+          },
+        },
+        {
+          model: ProofPayment,
+          attributes: {
+            exclude: ["orderId"],
+          },
+        },
+        {
+          model: OrderReview,
+          attributes: {
+            exclude: ["orderId"],
+          },
+        },
+      ],
+    });
+    if (!order) {
+      createError("Order not found", 404);
+    }
+
+    if (order.userId != req.user.id) {
+      createError("You don't have permission", 404);
+    }
+    res.json({ order });
   } catch (err) {
     next(err);
   }

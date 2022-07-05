@@ -14,6 +14,7 @@ router.patch(
 );
 router.get("/me", userPassportJwt, userController.getMe);
 router.get("/orders", userPassportJwt, userController.getMyOrders);
+router.get("/order/:orderId", userPassportJwt, userController.getMyOrderById);
 router.get("/:userId", userController.getUserById);
 
 module.exports = router;
